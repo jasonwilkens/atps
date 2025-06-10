@@ -1,0 +1,39 @@
+.post {
+  margin-block-end: 1em;
+}
+
+.postText {
+}
+
+.replyConnector {
+  margin-block-start: -1em;
+  opacity: 0.5;
+}
+
+.postRepostAuthor {
+}
+
+.postRepostHandle,
+.handle {
+  opacity: 0.5;
+}
+
+.postQuoted {
+  padding-inline-start: 2ch;
+}
+
+.postQuotedText {
+}
+
+.post:first-of-type .postStart {
+  display: none;
+}
+
+.postStart {
+  opacity: 0.5;
+  margin-block-end: 1em;
+}
+
+.subtle {
+  opacity: 0.5;
+}
