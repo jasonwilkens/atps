@@ -5,8 +5,7 @@
 body {
   background-color: Canvas;
   color: CanvasText;
-  font-family: monospace;
-  font-size: 16px;
+  font-size: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
