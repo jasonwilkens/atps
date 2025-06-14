@@ -13,6 +13,7 @@
 .postRepostAuthor {
 }
 
+.postDate,
 .postRepostHandle,
 .handle {
   opacity: 0.5;

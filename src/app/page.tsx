@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import Post from "./_components/post";
+import debounce from "lodash/debounce";
 import { ProfileViewDetailed } from "@atproto/api/dist/client/types/app/bsky/actor/defs";
 import { FeedViewPostExtended } from "./types";
-import debounce from "lodash/debounce";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -87,6 +87,7 @@ export default function Home() {
       }
       const data = await response.json();
       setAtProtoProfile(data);
+      document.title = data.handle;
     } catch (error) {
       console.error(error);
     }
@@ -111,7 +112,7 @@ export default function Home() {
   useEffect(() => {
     window.addEventListener("scroll", debouncedHandleScroll);
     return () => window.removeEventListener("scroll", debouncedHandleScroll);
-  }, [atProtoFeedCursor, atProtoFeedData, isLoading]);
+  }, [atProtoFeedCursor, atProtoFeedData, debouncedHandleScroll, isLoading]);
 
   const feedPosts = atProtoFeedData
     ? atProtoFeedData.map((postObj, i) => (

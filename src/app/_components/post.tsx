@@ -19,6 +19,9 @@ export default function Post(props: FeedViewPostExtended) {
     return (
       <li className={styles.post}>
         <p className={styles.postStart}>-</p>
+        <p className={styles.postDate}>
+          {new Date(props.post.indexedAt).toLocaleDateString()}
+        </p>
         {isRepost && (
           <p className={styles.postRepostAuthor}>
             <span className={styles.subtle}>&#61;&gt;</span>{" "}
