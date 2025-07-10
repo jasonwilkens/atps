@@ -17,4 +17,26 @@ export type FeedViewPostExtended = FeedViewPost & {
       };
     };
   };
+  reply?: {
+    parent?: {
+      cid: string;
+      record: {
+        reply?: {
+          parent?: {
+            cid: string;
+          };
+          root?: {
+            cid: string;
+          };
+        };
+        text?: string;
+      };
+    };
+    root?: {
+      cid: string;
+      record: {
+        text?: string;
+      };
+    };
+  };
 };

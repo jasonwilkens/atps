@@ -45,8 +45,18 @@ export default function Home() {
       const data = await response.json();
       const cursor = data.cursor;
       const feed = data.feed;
+
+      // if postObj contains a parent and a root,
+      //   and the root is the parent of the parent (3-post thread)
+      //     show them all
+      //   and the root is not the parent of the parent (>3-post thread)
+      //     show the post and parent in reply to longer thread with root and [thread] between)
+      // remove root and parent from feed (only need to do for next 100 posts or so)
+
+      /*
       let reply;
       let parentIndex;
+
 
       for (let i = 0; i < feed.length; i++) {
         if (feed[i].reply?.parent?.cid) {
@@ -59,6 +69,7 @@ export default function Home() {
           feed.splice(parentIndex + 1, 0, reply);
         }
       }
+       */
 
       if (atProtoFeedData) {
         let concatedFeed = atProtoFeedData.concat(feed);
