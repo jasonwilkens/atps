@@ -57,7 +57,6 @@ export default function Home() {
               postObj.post.cid === feed[i].reply.parent.cid,
           );
           if (parentIndex > -1) {
-            next100.splice(parentIndex, 1);
             feed.splice(parentIndex + i, 1);
           }
 
@@ -67,7 +66,6 @@ export default function Home() {
               postObj.post.cid === feed[i].reply.root.cid,
           );
           if (rootIndex > -1) {
-            next100.splice(rootIndex, 1);
             feed.splice(rootIndex + i, 1);
           }
         }
