@@ -46,30 +46,32 @@ export default function Home() {
       const cursor = data.cursor;
       const feed = data.feed;
 
-      // if postObj contains a parent and a root,
-      //   and the root is the parent of the parent (3-post thread)
-      //     show them all
-      //   and the root is not the parent of the parent (>3-post thread)
-      //     show the post and parent in reply to longer thread with root and [thread] between)
-      // remove root and parent from feed (only need to do for next 100 posts or so)
-
-      /*
-      let reply;
       let parentIndex;
-
+      let rootIndex;
 
       for (let i = 0; i < feed.length; i++) {
         if (feed[i].reply?.parent?.cid) {
-          reply = feed[i];
-          parentIndex = feed.findIndex(
+          let next100 = feed.slice(i, Math.min(feed.length, i + 100));
+          parentIndex = next100.findIndex(
             (postObj: FeedViewPostExtended) =>
               postObj.post.cid === feed[i].reply.parent.cid,
           );
-          feed.splice(i, 1);
-          feed.splice(parentIndex + 1, 0, reply);
+          if (parentIndex > -1) {
+            next100.splice(parentIndex, 1);
+            feed.splice(parentIndex + i, 1);
+          }
+
+          next100 = feed.slice(i, Math.min(feed.length, i + 100));
+          rootIndex = next100.findIndex(
+            (postObj: FeedViewPostExtended) =>
+              postObj.post.cid === feed[i].reply.root.cid,
+          );
+          if (rootIndex > -1) {
+            next100.splice(rootIndex, 1);
+            feed.splice(rootIndex + i, 1);
+          }
         }
       }
-       */
 
       if (atProtoFeedData) {
         let concatedFeed = atProtoFeedData.concat(feed);

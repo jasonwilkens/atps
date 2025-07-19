@@ -43,7 +43,7 @@ export default function Post(props: FeedViewPostExtended) {
       )}
       {isGreatOrGreaterGrandchild && (
         <div className={styles.replyConnector}>
-          <p>&lt;/thread continues&hellip;/&gt;</p>
+          <p>&lt;/&hellip;/&gt;</p>
           <div>|</div>
         </div>
       )}
