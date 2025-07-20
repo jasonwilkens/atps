@@ -20,6 +20,24 @@ export default function Post(props: FeedViewPostExtended) {
   const hasEmbeddedPost =
     props.post.embed?.$type === "app.bsky.embed.record#view";
 
+  const hasEmbeddedLink =
+    props.post.embed?.$type === "app.bsky.embed.external#view";
+
+  let embedDomain;
+  if (hasEmbeddedLink) {
+    if (props.post.embed?.external?.uri.startsWith("https://")) {
+      embedDomain = props.post.embed?.external?.uri.slice(8);
+    } else if (props.post.embed?.external?.uri.startsWith("http://")) {
+      embedDomain = props.post.embed?.external?.uri.slice(7);
+    }
+    if (embedDomain && embedDomain.startsWith("www.")) {
+      embedDomain = embedDomain.slice(4);
+    }
+    if (embedDomain && embedDomain.includes("/")) {
+      embedDomain = embedDomain?.split("/")[0];
+    }
+  }
+
   return (
     <li className={styles.post}>
       <p className={styles.postStart}>-</p>
@@ -69,6 +87,12 @@ export default function Post(props: FeedViewPostExtended) {
             {props.post.embed?.record?.value?.text}
           </p>
         </div>
+      )}
+      {hasEmbeddedLink && (
+        <a href={props.post.embed?.external?.uri}>
+          {props.post.embed?.external?.title} ::{" "}
+          {props.post.embed?.external?.description} [{embedDomain}]
+        </a>
       )}
     </li>
   );

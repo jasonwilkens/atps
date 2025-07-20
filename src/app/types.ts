@@ -6,6 +6,12 @@ export type FeedViewPostExtended = FeedViewPost & {
       text?: string;
     };
     embed?: {
+      external: {
+        title: string;
+        description: string;
+        uri: string;
+      };
+      $type?: string;
       record?: {
         author?: {
           displayName?: string;

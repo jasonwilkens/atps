@@ -5,7 +5,7 @@
 body {
   background-color: Canvas;
   color: CanvasText;
-  font-size: 18px;
+  font-size: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -24,6 +24,19 @@ p {
   margin-block: 0;
   max-width: 55ch;
   white-space: pre-line;
+}
+
+a,
+button {
+  color: var(--accent-color);
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 @media (prefers-color-scheme: dark) {

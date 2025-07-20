@@ -15,18 +15,14 @@ export default function Home() {
   const [atProtoProfile, setAtProtoProfile] = useState<ProfileViewDetailed>();
   const [atProtoFeedCursor, setAtProtoFeedCursor] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [postsRemoved, setPostsRemoved] = useState<number>(0);
   const cursorParam = `&cursor=${atProtoFeedCursor}`;
 
   const fetchFeed = async () => {
     if (isLoading) {
       return;
     }
-    if (
-      atProtoFeedData &&
-      atProtoProfile &&
-      // @ts-expect-error there is atProtoProfile
-      atProtoFeedData?.length >= atProtoProfile?.postsCount
-    ) {
+    if (atProtoFeedData && !atProtoFeedCursor) {
       setIsLoading(false);
       return;
     }
@@ -58,6 +54,7 @@ export default function Home() {
           );
           if (parentIndex > -1) {
             feed.splice(parentIndex + i, 1);
+            setPostsRemoved(postsRemoved ? postsRemoved + 1 : 1);
           }
 
           next100 = feed.slice(i, Math.min(feed.length, i + 100));
@@ -67,6 +64,7 @@ export default function Home() {
           );
           if (rootIndex > -1) {
             feed.splice(rootIndex + i, 1);
+            setPostsRemoved(postsRemoved ? postsRemoved + 1 : 1);
           }
         }
       }
@@ -75,7 +73,7 @@ export default function Home() {
         let concatedFeed = atProtoFeedData.concat(feed);
         if (
           atProtoProfile?.postsCount &&
-          concatedFeed.length >= atProtoProfile.postsCount
+          concatedFeed.length + postsRemoved >= atProtoProfile.postsCount
         ) {
           concatedFeed = concatedFeed.slice(0, atProtoProfile.postsCount);
         }
@@ -153,14 +151,12 @@ export default function Home() {
         {(!feedPosts || isLoading) && (
           <p className={styles.loader}>Loading&hellip;</p>
         )}
-        {feedPosts &&
-          atProtoProfile &&
-          feedPosts.length === atProtoProfile.postsCount && (
-            <>
-              <p>---</p>
-              <p className={styles.feedEnd}>End of feed</p>
-            </>
-          )}
+        {feedPosts && !atProtoFeedCursor && (
+          <>
+            <p>---</p>
+            <p className={styles.feedEnd}>End of feed</p>
+          </>
+        )}
       </main>
     </div>
   );
