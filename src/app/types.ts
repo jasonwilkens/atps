@@ -17,6 +17,17 @@ export type FeedViewPostExtended = FeedViewPost & {
           displayName?: string;
           handle?: string;
         };
+        embeds?: [
+          {
+            $type: string;
+            external?: {
+              description: string;
+              thumb: string;
+              title: string;
+              uri: string;
+            };
+          },
+        ];
         value?: {
           text?: string;
         };

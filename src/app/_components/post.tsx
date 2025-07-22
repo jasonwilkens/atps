@@ -23,19 +23,34 @@ export default function Post(props: FeedViewPostExtended) {
   const hasEmbeddedLink =
     props.post.embed?.$type === "app.bsky.embed.external#view";
 
+  const embeddedPostLink = props.post.embed?.record?.embeds?.find(
+    (embed) => embed.$type === "app.bsky.embed.external#view",
+  );
+
+  const domainFromUrl = (url: string) => {
+    let domain;
+    if (url.startsWith("https://")) {
+      domain = url.slice(8);
+    } else if (url.startsWith("http://")) {
+      domain = url.slice(7);
+    }
+    if (domain && domain.startsWith("www.")) {
+      domain = domain.slice(4);
+    }
+    if (domain && domain.includes("/")) {
+      domain = domain.split("/")[0];
+    }
+    return domain;
+  };
+
   let embedDomain;
-  if (hasEmbeddedLink) {
-    if (props.post.embed?.external?.uri.startsWith("https://")) {
-      embedDomain = props.post.embed?.external?.uri.slice(8);
-    } else if (props.post.embed?.external?.uri.startsWith("http://")) {
-      embedDomain = props.post.embed?.external?.uri.slice(7);
-    }
-    if (embedDomain && embedDomain.startsWith("www.")) {
-      embedDomain = embedDomain.slice(4);
-    }
-    if (embedDomain && embedDomain.includes("/")) {
-      embedDomain = embedDomain?.split("/")[0];
-    }
+  if (hasEmbeddedLink && props.post.embed?.external?.uri) {
+    embedDomain = domainFromUrl(props.post.embed?.external?.uri);
+  }
+
+  let embeddedPostLinkDomain;
+  if (embeddedPostLink && embeddedPostLink.external?.uri) {
+    embeddedPostLinkDomain = domainFromUrl(embeddedPostLink.external?.uri);
   }
 
   return (
@@ -86,6 +101,13 @@ export default function Post(props: FeedViewPostExtended) {
           <p className={styles.postQuotedText}>
             {props.post.embed?.record?.value?.text}
           </p>
+          {embeddedPostLink && (
+            <a href={embeddedPostLink.external?.uri}>
+              {embeddedPostLink.external?.title} ::{" "}
+              {embeddedPostLink.external?.description} [{embeddedPostLinkDomain}
+              ]
+            </a>
+          )}
         </div>
       )}
       {hasEmbeddedLink && (
