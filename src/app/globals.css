@@ -1,10 +1,20 @@
 :root {
-  --accent-color: #00ace9;
+  --accent-color: #ffe6c7;
+  --text-color: #eff5f5;
+  --subtle-color: #c1cdce;
+  --background-color: #3e5a5c;
+
+  /*
+  --accent-color: #76abae;
+  --text-color: #eee;
+  --subtle-color: #97999d;
+  --background-color: #222831;
+  */
 }
 
 body {
-  background-color: Canvas;
-  color: CanvasText;
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-size: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

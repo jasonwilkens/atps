@@ -19,7 +19,7 @@
 }
 
 .handle {
-  opacity: 0.6;
+  color: var(--subtle-color);
 }
 
 .main {
