@@ -20,6 +20,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+::selection {
+  background-color: #222831;
+  color: #eee;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
