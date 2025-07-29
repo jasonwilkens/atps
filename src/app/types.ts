@@ -6,6 +6,17 @@ export type FeedViewPostExtended = FeedViewPost & {
       text?: string;
     };
     embed?: {
+      images?: [
+        {
+          alt: string;
+          aspectRatio: {
+            height: number;
+            width: number;
+          };
+          thumb: string;
+          fullsize: string;
+        },
+      ];
       external: {
         title: string;
         description: string;

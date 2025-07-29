@@ -23,6 +23,9 @@ export default function Post(props: FeedViewPostExtended) {
   const hasEmbeddedLink =
     props.post.embed?.$type === "app.bsky.embed.external#view";
 
+  const hasEmbeddedImages =
+    props.post.embed?.$type === "app.bsky.embed.images#view";
+
   const embeddedPostLink = props.post.embed?.record?.embeds?.find(
     (embed) => embed.$type === "app.bsky.embed.external#view",
   );
@@ -51,6 +54,25 @@ export default function Post(props: FeedViewPostExtended) {
   let embeddedPostLinkDomain;
   if (embeddedPostLink && embeddedPostLink.external?.uri) {
     embeddedPostLinkDomain = domainFromUrl(embeddedPostLink.external?.uri);
+  }
+
+  let embeddedImages;
+  if (hasEmbeddedImages) {
+    embeddedImages = props.post.embed?.images?.map((image, i: number) => (
+      <figure key={i}>
+        <img
+          key={i}
+          src={image.thumb}
+          height={image.aspectRatio?.height}
+          width={image.aspectRatio.width}
+        />
+        {image.alt && (
+          <figcaption>
+            <span className={styles.subtle}>alt:</span> {image.alt}
+          </figcaption>
+        )}
+      </figure>
+    ));
   }
 
   return (
@@ -87,6 +109,9 @@ export default function Post(props: FeedViewPostExtended) {
         </div>
       )}
       <p className={styles.postText}>{text}</p>
+      {hasEmbeddedImages && (
+        <div className={styles.imagesWrapper}>{embeddedImages}</div>
+      )}
       {hasEmbeddedPost && (
         <div className={styles.postQuoted}>
           <p>

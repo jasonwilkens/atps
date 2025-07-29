@@ -54,6 +54,10 @@ a:hover {
   text-decoration: underline;
 }
 
+figure {
+  line-height: 1;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
