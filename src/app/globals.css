@@ -1,15 +1,15 @@
 :root {
+  /*
   --accent-color: #ffe6c7;
   --text-color: #eff5f5;
   --subtle-color: #c1cdce;
   --background-color: #3e5a5c;
+  */
 
-  /*
   --accent-color: #76abae;
   --text-color: #eee;
   --subtle-color: #97999d;
   --background-color: #222831;
-  */
 }
 
 body {
@@ -21,7 +21,7 @@ body {
 }
 
 ::selection {
-  background-color: #222831;
+  background-color: #3e5a5c;
   color: #eee;
 }
 
