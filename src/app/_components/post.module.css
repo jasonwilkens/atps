@@ -1,16 +1,10 @@
 .post {
-  margin-block-end: 6em;
-}
-
-.postText {
+  margin-block-end: 3em;
 }
 
 .replyConnector {
   user-select: none;
   color: var(--subtle-color);
-}
-
-.postRepostAuthor {
 }
 
 .postDate,
@@ -21,9 +15,6 @@
 
 .postQuoted {
   padding-inline-start: 2ch;
-}
-
-.postQuotedText {
 }
 
 .post:first-of-type .postStart {
@@ -43,4 +34,10 @@
   max-width: 100%;
   height: auto;
   border-radius: 0.25ch;
+}
+
+@media screen and (min-width: 768px) {
+  .post {
+    margin-block-end: 6em;
+  }
 }
