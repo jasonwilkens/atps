@@ -18,13 +18,17 @@ export default function Post(props: FeedViewPostExtended) {
     props.reply?.parent?.cid !== props.reply?.root?.cid;
 
   const hasEmbeddedPost =
-    props.post.embed?.$type === "app.bsky.embed.record#view";
+    props.post.embed?.$type === "app.bsky.embed.record#view" ||
+    props.post.embed?.$type === "app.bsky.embed.recordWithMedia#view";
 
   const hasEmbeddedLink =
     props.post.embed?.$type === "app.bsky.embed.external#view";
 
   const hasEmbeddedImages =
     props.post.embed?.$type === "app.bsky.embed.images#view";
+
+  const hasEmbeddedMediaImages =
+    props.post.embed?.media?.$type === "app.bsky.embed.images#view";
 
   const embedHasEmbeddedImages =
     props.post.embed?.record?.embeds &&
@@ -80,6 +84,26 @@ export default function Post(props: FeedViewPostExtended) {
         )}
       </figure>
     ));
+  }
+
+  let embeddedMediaImages;
+  if (hasEmbeddedMediaImages) {
+    embeddedMediaImages = props.post.embed?.media?.images?.map(
+      (image, i: number) => (
+        <figure key={i}>
+          <img
+            src={image.thumb}
+            height={image.aspectRatio?.height}
+            width={image.aspectRatio.width}
+          />
+          {image.alt && (
+            <figcaption>
+              <span className={styles.subtle}>alt:</span> {image.alt}
+            </figcaption>
+          )}
+        </figure>
+      ),
+    );
   }
 
   let parentEmbeddedImages;
@@ -162,19 +186,25 @@ export default function Post(props: FeedViewPostExtended) {
       {hasEmbeddedImages && (
         <div className={styles.imagesWrapper}>{embeddedImages}</div>
       )}
+      {hasEmbeddedMediaImages && (
+        <div className={styles.imagesWrapper}>{embeddedMediaImages}</div>
+      )}
       {hasEmbeddedPost && (
         <div className={styles.postQuoted}>
           <p>
             <span
               className={styles.subtle}
             >{`${isRepost ? "=>>" : "=>"}`}</span>{" "}
-            {props.post.embed?.record?.author?.displayName}{" "}
+            {props.post.embed?.record?.author?.displayName}
+            {props.post.embed?.record?.record?.author?.displayName}{" "}
             <span className={styles.postRepostHandle}>
               @{props.post.embed?.record?.author?.handle}
+              {props.post.embed?.record?.record?.author?.handle}
             </span>
           </p>
           <p className={styles.postQuotedText}>
             {props.post.embed?.record?.value?.text}
+            {props.post.embed?.record?.record?.value?.text}
           </p>
           {embeddedPostLink && (
             <a href={embeddedPostLink.external?.uri}>

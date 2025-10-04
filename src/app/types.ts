@@ -6,6 +6,20 @@ export type FeedViewPostExtended = FeedViewPost & {
       text?: string;
     };
     embed?: {
+      media?: {
+        $type: string;
+        images?: [
+          {
+            alt: string;
+            aspectRatio: {
+              height: number;
+              width: number;
+            };
+            thumb: string;
+            fullsize: string;
+          },
+        ];
+      };
       images?: [
         {
           alt: string;
@@ -50,6 +64,15 @@ export type FeedViewPostExtended = FeedViewPost & {
             ];
           },
         ];
+        record?: {
+          author?: {
+            displayName: string;
+            handle: string;
+          };
+          value?: {
+            text: string;
+          };
+        };
         value?: {
           text?: string;
         };
