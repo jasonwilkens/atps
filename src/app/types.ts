@@ -70,6 +70,20 @@ export type FeedViewPostExtended = FeedViewPost & {
         };
         text?: string;
       };
+      embed?: {
+        $type: string;
+        images?: [
+          {
+            alt: string;
+            aspectRatio: {
+              height: number;
+              width: number;
+            };
+            thumb: string;
+            fullsize: string;
+          },
+        ];
+      };
     };
     root?: {
       cid: string;

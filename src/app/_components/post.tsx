@@ -31,6 +31,9 @@ export default function Post(props: FeedViewPostExtended) {
     props.post.embed?.record?.embeds[0] &&
     props.post.embed?.record?.embeds[0].$type === "app.bsky.embed.images#view";
 
+  const parentHasEmbeddedImages =
+    props.reply?.parent?.embed?.$type === "app.bsky.embed.images#view";
+
   const embeddedPostLink = props.post.embed?.record?.embeds?.find(
     (embed) => embed.$type === "app.bsky.embed.external#view",
   );
@@ -77,6 +80,26 @@ export default function Post(props: FeedViewPostExtended) {
         )}
       </figure>
     ));
+  }
+
+  let parentEmbeddedImages;
+  if (parentHasEmbeddedImages) {
+    parentEmbeddedImages = props.reply?.parent?.embed?.images?.map(
+      (image, i: number) => (
+        <figure key={i}>
+          <img
+            src={image.thumb}
+            height={image.aspectRatio?.height}
+            width={image.aspectRatio.width}
+          />
+          {image.alt && (
+            <figcaption>
+              <span className={styles.subtle}>alt:</span> {image.alt}
+            </figcaption>
+          )}
+        </figure>
+      ),
+    );
   }
 
   let embedEmbeddedImages;
@@ -129,6 +152,9 @@ export default function Post(props: FeedViewPostExtended) {
       {isReply && (
         <div>
           <p>{props.reply?.parent?.record?.text}</p>
+          {parentHasEmbeddedImages && (
+            <div className={styles.imagesWrapper}>{parentEmbeddedImages}</div>
+          )}
           <div className={styles.replyConnector}>|</div>
         </div>
       )}
