@@ -26,6 +26,11 @@ export default function Post(props: FeedViewPostExtended) {
   const hasEmbeddedImages =
     props.post.embed?.$type === "app.bsky.embed.images#view";
 
+  const embedHasEmbeddedImages =
+    props.post.embed?.record?.embeds &&
+    props.post.embed?.record?.embeds[0] &&
+    props.post.embed?.record?.embeds[0].$type === "app.bsky.embed.images#view";
+
   const embeddedPostLink = props.post.embed?.record?.embeds?.find(
     (embed) => embed.$type === "app.bsky.embed.external#view",
   );
@@ -61,7 +66,6 @@ export default function Post(props: FeedViewPostExtended) {
     embeddedImages = props.post.embed?.images?.map((image, i: number) => (
       <figure key={i}>
         <img
-          key={i}
           src={image.thumb}
           height={image.aspectRatio?.height}
           width={image.aspectRatio.width}
@@ -73,6 +77,26 @@ export default function Post(props: FeedViewPostExtended) {
         )}
       </figure>
     ));
+  }
+
+  let embedEmbeddedImages;
+  if (embedHasEmbeddedImages) {
+    embedEmbeddedImages = props.post.embed?.record?.embeds[0].images?.map(
+      (image, i: number) => (
+        <figure key={i}>
+          <img
+            src={image.thumb}
+            height={image.aspectRatio?.height}
+            width={image.aspectRatio?.width}
+          />
+          {image.alt && (
+            <figcaption>
+              <span className={styles.subtle}>alt:</span> {image.alt}
+            </figcaption>
+          )}
+        </figure>
+      ),
+    );
   }
 
   return (
@@ -132,6 +156,9 @@ export default function Post(props: FeedViewPostExtended) {
               {embeddedPostLink.external?.description} [{embeddedPostLinkDomain}
               ]
             </a>
+          )}
+          {embedHasEmbeddedImages && (
+            <div className={styles.imagesWrapper}>{embedEmbeddedImages}</div>
           )}
         </div>
       )}

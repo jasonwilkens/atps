@@ -28,7 +28,7 @@ export type FeedViewPostExtended = FeedViewPost & {
           displayName?: string;
           handle?: string;
         };
-        embeds?: [
+        embeds: [
           {
             $type: string;
             external?: {
@@ -37,6 +37,17 @@ export type FeedViewPostExtended = FeedViewPost & {
               title: string;
               uri: string;
             };
+            images?: [
+              {
+                alt: string;
+                aspectRatio: {
+                  height: number;
+                  width: number;
+                };
+                thumb: string;
+                fullsize: string;
+              },
+            ];
           },
         ];
         value?: {
